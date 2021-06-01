@@ -1,2 +1,3 @@
 # movie-website
-This project is created with me and @udenizdemirbilek .
+This project created by the collaboration of me and @udenizdemirbilek .
+
