@@ -1,0 +1,117 @@
+.homePageMovieImg {
+    cursor: pointer;
+    border-radius: 90px 90px 0 0;
+    border: solid black 6px;
+    outline: 0.01px solid wheat;
+    transition: all ease-in-out 300s;
+}   
+
+.homePageMovieImg:hover {
+    /* border: red solid 50px; */
+    outline: -6.01px solid wheat;
+    transition: all ease-in-out 300s;
+    outline-offset: -6.01px;
+}
+
+.movie-title {
+    color: rgb(247, 231, 202);
+    font-family: Bebas Neue, sans-serif;
+    text-decoration: underline red dotted;
+    font-size: 1.8rem;
+}
+
+#container {
+    background-color: #3D0B37;
+    width: 100%;
+    /* padding-top: */
+    /* height: 100vh; */
+}
+
+#container > .homePageMovies{
+	justify-content: center;
+}
+
+#movie-backdrop {
+    width: 100%;
+}
+
+.container {
+    padding-top: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.actor {
+    margin: 24px 16px 0 0;
+}
+
+/* .actor-card-wrapper {
+    /* display: flex; */
+/* } */
+
+.actor > img {
+    max-height: 200px;
+    padding-left: 10px;
+}
+
+.actor {
+    text-align: center;
+}
+
+.director-card {
+    max-height: 200px;
+    padding-left: 10px;
+}
+
+.director-card > img {
+    height: 150px;
+}
+
+.related-movies > img {
+    max-height: 200px;
+    padding-left: 10px;
+}
+
+.related-movie > img {
+    max-height: 200px;
+    padding-left: 10px;
+} 
+
+.related-movies {
+    text-align: center;
+}
+
+.company-card {
+    text-align: center;
+};
+
+/* .company-card > img {
+    /* max-width: 20px; */
+    /* height: 10px; */
+    /* padding-left: 10px; */
+/* } */
+.productionDiv {
+    display:flex;
+    flex-direction: row;
+    justify-content:space-between ;
+}
+
+
+/* Navbar styles start */
+.universal-nav-bar {
+    display: flex;
+    background-color: #382e2b;
+}
+
+.tmdb-logo {
+    margin-left: 10px;
+    max-width: 6rem;
+}
+
+.search-bar {
+    background-color: #816739;
+}
+
+/* Navbar styles END */
