@@ -25,7 +25,7 @@ Documentation : 'https://developers.themoviedb.org/3/getting-started/introductio
 Add a universal navbar (it appears on every page) to the home page that includes
 buttons that go to the following pages:
 
-- Home button, takes you to the home page
+- DONE Home button, takes you to the home page
 - Movies button that has a dropdown list to show different movie genres. For
   example: Action, Sci-Fi, Comedy ...etc, When you click one of them it should
   load the movies for that genre.
@@ -35,7 +35,7 @@ buttons that go to the following pages:
 - Actor list page
 - About page that has a description of the website
 - Search box where you can type the movie or actor name and display the
-related results. (https://developers.themoviedb.org/3/search/multi-search)
+related results. ( https://api.themoviedb.org/3/search/movie?api_key=ecfdd3d5230c96c392fc9421937894a9&language=en-US&query=fight&page=1&include_adult=false, https://api.themoviedb.org/3/search/person?api_key=ecfdd3d5230c96c392fc9421937894a9&language=en-US&query=edward&page=1&include_adult=false, use the input with movie and actor search, NOT MULTI SEARCH!)
 - A filter dropdown to filter the displayed movies in the home page, based
 on (popular, ???relase date???, top rated, now playing and up coming) (https://developers.themoviedb.org/3/movies/get-movie-details,
 https://api.themoviedb.org/3/movie/popular?api_key=ecfdd3d5230c96c392fc9421937894a9,
@@ -67,7 +67,7 @@ Add a universal footer that includes:
   phones
 - Style the rest of the page however you like.
 - Add the rating and genres to the movies in the home page and a description
-  when you hover over one of them
+  when you hover over one of them (https://api.themoviedb.org/3/movie/550?api_key=ecfdd3d5230c96c392fc9421937894a9, genres, overview)
 
 ## DUE 29th of MAY Single Movie Page 
 We build part of the single movie page for you, but the information isn't
@@ -98,14 +98,14 @@ Single Actor Page. CSS should most certainly be reused here!
 This page can be reached by clicking on an actor in the actors list page or the
 credits in the single movie page.
 
-### Data Display
-- The actor name
-- The actor gender
-- A picture of the actor
-- The actor popularity
-- The birthday of the actor and (if available) death day
-- A biography about the actor
-- A list of movies the actor participated in
+### Data Display 
+- DONE The actor name (https://api.themoviedb.org/3/person/819?api_key=ecfdd3d5230c96c392fc9421937894a9&language=en-US)
+- DONE The actor gender (gender, 1:Female, 2:Male)
+- DONE A picture of the actor (profile_path)
+- DONE The actor popularity (popularity)
+- DONE The birthday of the actor and (if available) death day (birthday and if(deathday != null) deathday)
+- DONE A biography about the actor (biography)
+- DONE A list of movies the actor participated in (https://api.themoviedb.org/3/person/819/movie_credits?api_key=ecfdd3d5230c96c392fc9421937894a9&language=en-US, first 6 for cast and crew roles)
 
 ## Bonus
 If you finish early you can work on the same functionalities, but for TV shows.

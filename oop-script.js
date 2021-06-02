@@ -3,10 +3,11 @@
 class App {
   static async run() {
     //fetches now playing movies and displays them in the homepage
-    const movies = await APIService.fetchMovies()
+    const movies = await APIService.fetchMovies();
     HomePage.renderMovies(movies);
-  }
-}
+  };
+};
+
 class APIService {
 
   static TMDB_BASE_URL = 'https://api.themoviedb.org/3';
@@ -50,14 +51,28 @@ class APIService {
     const data = await response.json();
     return new Trailer(data);
   };
+
+  //returns actor details for single actor page for any actor id
+  static async fetchSingleActor(personId){
+    const url = APIService._constructUrl(`person/${personId}`);
+    const response = await fetch(url);
+    const data = await response.json();
+    return new SingleActor(data);
+  }
+
+  //returns the movie credits for a person id
+  static async fetchMovieCreditsForActor(personId){
+    const url = APIService._constructUrl(`person/${personId}/movie_credits`);
+    const response = await fetch(url);
+    const data = await response.json();
+    return new MovieCredits(data);
+  }
 };
 
 class HomePage {
 
   static container = document.getElementById('container');
-  static div = document.createElement("div");
-  static divRow = this.div.setAttribute("class","homePageMovies row g-3 p-5");
-  static moviesContainer = this.container.appendChild(this.div); 
+  
   // can we get these four lines in one method?
   // get moviesContainer() {
   //   const container = document.getElementById('container')
@@ -74,6 +89,15 @@ class HomePage {
   // }
   //displays returned movie objects in the home page
   static renderMovies(movies) {
+
+    if(this.container.innerText !== "") {
+      this.container.innerText = "";
+    }
+
+    const div = document.createElement("div");
+    div.setAttribute("class","homePageMovies row g-3 p-4");
+    const moviesContainer = this.container.appendChild(div); 
+
     movies.forEach(movie => {
       //creates single movie divisions for the home page for each movie
       const movieDiv = document.createElement("div");
@@ -92,8 +116,9 @@ class HomePage {
 
       movieDiv.appendChild(movieImage);
       movieDiv.appendChild(movieTitle);
-      this.moviesContainer.appendChild(movieDiv);
+      moviesContainer.appendChild(movieDiv);
     })
+    
   }
 }
 
@@ -121,10 +146,56 @@ class MoviePage {
 
 class ActorPage {
   static container = document.getElementById('container');
-  static renderActorPage(actorId) {
-    this.container.innerHTML = `<p>${actorId}</p>`
+  static async run (personId) {
+    const actorData = await APIService.fetchSingleActor(personId)
+    const movieCredits = await APIService.fetchMovieCreditsForActor(personId)
+    
+    ActorPage.renderActorPage(actorData, movieCredits)
+  }
+  static renderActorPage(actorData, movieCredits) {
+    console.log(movieCredits)
+    //A function to create the string of the birthday and deathday if the actor is deceased, otherwise only birthday, none if no info
+    const birthAndDeathday = actorData => {
+      if (actorData.birthday != null) {
+        if (actorData.deathday != null) {return `Birthday: ${actorData.birthday} Deathday: ${actorData.deathday}`}
+        else {return `Birthday: ${actorData.birthday}`}}
+      else return ``
+    }
+
+    //A function to create the string for the gender of the actor
+    const gender = actorData => actorData.gender == 1 ? "Female" : "Male";
+
+    //Loop through movies played in and create a html string to display 
+    const moviesCast = movieCredits.moviesInCast.map(movie =>`<div class="movie-card col-md-2 col-sm-4"><img class="img-fluid" src=${movieCredits.castMoviesPosterUrl(movieCredits.moviesInCast.indexOf(movie))} alt="${movie.title}"><h6>${movie.title}</h6></div>`).join(" ") 
+
+    //Loop through movies worked in and create a html string to display
+    const moviesCrew = movieCredits.moviesInCrew.map(movie =>`<div class="movie-card col-md-2 col-sm-4"><img class="img-fluid" src=${movieCredits.crewMoviesPosterUrl(movieCredits.moviesInCrew.indexOf(movie))} alt="${movie.title}"><h6>${movie.title}</h6></div>`).join(" ")
+
+
+    this.container.innerHTML = `
+    <div class="row">
+        <div class="col-md-4">
+          <img id="actor-profile" class="img-fluid" src=${actorData.actorsProfileUrl()}> 
+        </div>
+        <div class="col-md-8">
+        <h2 id="actor-name">${actorData.name}</h2>
+        <p id="gender">${gender(actorData)}</p>
+        <p id="popularity">Popularity: ${actorData.popularity}</p>
+        <p id="biography">Biography: ${actorData.biography}</p>
+        <p id="birthday & deathday">${birthAndDeathday(actorData)}</p>
+      </div>}        
+    </div>
+    <div class="row">
+    <h3>Movies In Cast</h3>
+    ${moviesCast}
+    </div>
+    <div class="row">
+    <h3>Movies In Crew</h3>
+    ${moviesCrew}
+    </div>`
   };
 };
+
 
 class MovieSection {
   static renderMovie(movie) {
@@ -173,7 +244,7 @@ class MovieSection {
     const castCrewDiv = document.querySelector('#castCrew-wrapper')
 
     //Loop through actors and create a html string including their names and photos, onclick image, call renderActorPage with the actor's id 
-    const actors = castCrew.actors.map(actor => `<div style="display:flex; flex-direction: column; justify-content: end;" class="actor col-md-2"><h6>${actor.name}</h6><img style="cursor: pointer;" onclick="ActorPage.renderActorPage(${actor.id})" src=${castCrew.actorsProfileUrl(castCrew.actors.indexOf(actor))} class="img-fluid"></div>`).join(" ")
+    const actors = castCrew.actors.map(actor => `<div class="actor col-md-2"><img style="cursor: pointer;" onclick="ActorPage.run(${actor.id})" src=${castCrew.actorsProfileUrl(castCrew.actors.indexOf(actor))} class="img-fluid"><h6>${actor.name}</h6></div>`).join(" ")
 
     castCrewDiv.innerHTML = ` 
       <div class="col-md-10 actor-card-wrapper column">
@@ -185,9 +256,9 @@ class MovieSection {
       <div class="col-md-2 director-card column">
        <h3>Director:</h3>
        <div class="row">
-        <h6>${castCrew.director.name}</h6>
         <img src=http://image.tmdb.org/t/p/w780/${castCrew.director.profile_path} class="img-fluid">
-       </div>
+        <h6>${castCrew.director.name}</h6>
+        </div>
       </div>`
   }
 
@@ -195,7 +266,7 @@ class MovieSection {
     const relatedMoviesDiv = document.querySelector('#related-movies')
 
     //Loop through related movies and create a html string to display
-    const recommendations = relatedMovies.movies.map(movie => `<div class="related-movie col-md-2">${movie.title}<img src=${relatedMovies.relatedMoviesPosterUrl(relatedMovies.movies.indexOf(movie))} class="img-fluid" role="button" ></div>`).join(" ")
+    const recommendations = relatedMovies.movies.map(movie => `<div class="related-movie col-md-2"><img src=${relatedMovies.relatedMoviesPosterUrl(relatedMovies.movies.indexOf(movie))} class="img-fluid" role="button" ><h6>${movie.title}</h6></div>`).join(" ")
     // role="button" bootstrap cursor change on hover
     relatedMoviesDiv.innerHTML = recommendations
   }
@@ -272,20 +343,38 @@ class Trailer {
   };
 }
 
-class Actor {
+class SingleActor {
   static PROFILE_BASE_URL = 'http://image.tmdb.org/t/p/w780';
   constructor(json) {
     this.name = json.name;
     this.gender = json.gender; // 1: Female, 2:Male
-    this.profile_path = json.profile_path; 
+    this.profilePath = json.profile_path; 
     this.popularity = json.popularity;
-    //UNFINISHED
+    this.biography = json.biography;
+    this.birthday = json.birthday;
+    this.deathday = json.deathday;
   }
 
   //Profile url is the pictures of the cast & crew
-  actorsProfileUrl(i) {
-    return this.actors[i].profile_path ? CastCrew.PROFILE_BASE_URL + this.actors[i].profile_path : "";
+  actorsProfileUrl() {
+    return this.profilePath ? SingleActor.PROFILE_BASE_URL + this.profilePath : "";
   };
 }
 
+class MovieCredits {
+  static POSTER_BASE_URL = 'http://image.tmdb.org/t/p/w780';
+  constructor(json){
+    this.moviesInCast = json.cast.slice(0,6)
+    this.moviesInCrew = json.crew.slice(0,6)
+  }
+
+  //Backdrop url is the pictures of the movies that can be used as a background
+  castMoviesPosterUrl(i) {
+    return this.moviesInCast[i].poster_path ? MovieCredits.POSTER_BASE_URL + this.moviesInCast[i].poster_path : "";
+  };
+
+  crewMoviesPosterUrl(i) {
+    return this.moviesInCrew[i].poster_path ? MovieCredits.POSTER_BASE_URL + this.moviesInCrew[i].poster_path : "";
+  };
+}
 document.addEventListener("DOMContentLoaded", App.run);

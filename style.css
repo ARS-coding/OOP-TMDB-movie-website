@@ -113,5 +113,8 @@
 .search-bar {
     background-color: #816739;
 }
-
+/* Change this later on!!! */
+p, h2, h3, h6 {
+    color: rgb(247, 231, 202);
+}
 /* Navbar styles END */
