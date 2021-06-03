@@ -15,43 +15,49 @@
 
 <body>
 
-    <!-- <nav class="universal-nav-bar">
-        <img  class="tmdb-logo" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="">
-        <input class="search-bar" type="text">
-        <ul class="home-movies-actors">
-            <li class="home">Home</li>
-            <li class="movies">Movies</li>
-            <li class="actors">Actors</li>
-        </ul>
-    </nav> -->
-
     <nav style="height: 80px;" class="navbar navbar-expand-lg navbar-light bg-light">
+      
+        <!-- Logo and toggler button -->
         <a class="navbar-brand offset-1" href="#"><img class="img-fluid" width="140px" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="TMBD logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-        </button>
-      
+        </button>      
+    
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item active" onclick="App.run()">
               <a class="nav-link h5" href="#">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link h5" href="#">Link</a>
+            <li class="nav-item active">
+              <a class="nav-link h5" href="#" onclick="ActorListPage.run()">Actors</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle h5" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
+            <li class="dropdown">
+              <a class="nav-link h5 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                Movie Genres
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+            
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" href="#" onclick="App.run(28)">Action</a></li>
+                <li><a class="dropdown-item" href="#" onclick="App.run(878)">Sci-Fi</a></li>
+                <li><a class="dropdown-item" href="#" onclick="App.run(35)">Comedy</a></li>
+                <li><a class="dropdown-item" href="#" onclick="App.run(18)">Drama</a></li>
+                <li><a class="dropdown-item" href="#" onclick="App.run(27)">Horror</a></li>
+                <li><a class="dropdown-item" href="#" onclick="App.run(16)">Animation</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a class="nav-link h5 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                Filter
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" href="#" onclick="App.run('popular')">Popular</a></li>
+                <li><a class="dropdown-item" href="#" onclick="App.run('top_rated')">Top Rated</a></li>
+                <li><a class="dropdown-item" href="#" onclick="App.run('now_playing')">Now Playing</a></li>
+                <li><a class="dropdown-item" href="#" onclick="App.run('upcoming')">Up Coming</a></li>
+              </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              <a class="nav-link h5" href="#">About</a>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0 offset-lg-2 offset-xl-3 d-flex">
@@ -59,12 +65,14 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
+
       </nav>
 
     <div id="container" class="container-fluid"></div>
     <!-- <div id="divRow" class="row g-4"></div> -->
 
     <script src="./oop-script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <!-- <script type="text/javascript" src="script.js"></script> -->
 </body>
 

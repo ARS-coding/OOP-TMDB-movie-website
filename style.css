@@ -23,16 +23,23 @@
 #container {
     background-color: #3D0B37;
     width: 100%;
-    /* padding-top: */
-    /* height: 100vh; */
 }
-
-#container > .homePageMovies{
+/* Change it to div afterwards if you want*/
+#container .homePageMovies,
+#container .actorListPageActors {
 	justify-content: center;
 }
 
 #movie-backdrop {
     width: 100%;
+}
+
+.bg-img-wrapper {
+    width: 100vw;
+    height: 86.5vh;
+    background-color: black;
+    opacity: 0.3;
+    color: white;
 }
 
 .container {
@@ -47,10 +54,6 @@
     margin: 24px 16px 0 0;
 }
 
-/* .actor-card-wrapper {
-    /* display: flex; */
-/* } */
-
 .actor > img {
     max-height: 200px;
     padding-left: 10px;
@@ -58,11 +61,6 @@
 
 .actor {
     text-align: center;
-}
-
-.director-card {
-    max-height: 200px;
-    padding-left: 10px;
 }
 
 .director-card > img {
@@ -83,21 +81,9 @@
     text-align: center;
 }
 
-.company-card {
-    text-align: center;
-};
-
-/* .company-card > img {
-    /* max-width: 20px; */
-    /* height: 10px; */
-    /* padding-left: 10px; */
-/* } */
 .productionDiv {
-    display:flex;
-    flex-direction: row;
-    justify-content:space-between ;
+    text-align: center;
 }
-
 
 /* Navbar styles start */
 .universal-nav-bar {
@@ -113,8 +99,9 @@
 .search-bar {
     background-color: #816739;
 }
+
 /* Change this later on!!! */
-p, h2, h3, h6 {
+p, h2, h3, h4, h6 {
     color: rgb(247, 231, 202);
 }
 /* Navbar styles END */
