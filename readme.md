@@ -34,9 +34,9 @@ buttons that go to the following pages:
   Pass the genre id to the discover API
   Get movies by genre https://developers.themoviedb.org/3/discover/movie-discover, with_genres)
 - DONE Actor list page
-- About page that has a description of the website
-- Search box where you can type the movie or actor name and display the
-related results. ( https://api.themoviedb.org/3/search/movie?api_key=ecfdd3d5230c96c392fc9421937894a9&language=en-US&query=fight&page=1&include_adult=false, https://api.themoviedb.org/3/search/person?api_key=ecfdd3d5230c96c392fc9421937894a9&language=en-US&query=edward&page=1&include_adult=false, use the input with movie and actor search, NOT MULTI SEARCH!)
+- DONE About page that has a description of the website
+- DONE Search box where you can type the movie or actor name and display the
+related results. ( https://api.themoviedb.org/3/search/movie?api_key=ecfdd3d5230c96c392fc9421937894a9&query=fight&include_adult=false, https://api.themoviedb.org/3/search/person?api_key=ecfdd3d5230c96c392fc9421937894a9&query=edward&include_adult=false, use the input with movie and actor search, NOT MULTI SEARCH!)
 - DONE A filter dropdown to filter the displayed movies in the home page, based
 on (popular, top rated, now playing and up coming) (https://developers.themoviedb.org/3/movies/get-movie-details,
 https://api.themoviedb.org/3/movie/popular?api_key=ecfdd3d5230c96c392fc9421937894a9,
@@ -47,8 +47,8 @@ https://api.themoviedb.org/3/movie/upcoming?api_key=ecfdd3d5230c96c392fc94219378
 ### Footer
 Add a universal footer that includes:
 
-- Credit to you and your partner for building the website, 
-- You and your partner's github link inside an icon and optionally, your social
+- DONE Credit to you and your partner for building the website, 
+- DONE You and your partner's github link inside an icon and optionally, your social
   media links
 
 ### DONE Styling
