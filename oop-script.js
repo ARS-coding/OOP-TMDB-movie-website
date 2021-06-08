@@ -2,11 +2,11 @@
 const container = document.getElementById('container');
 
 class App {
-  static async run(genreId) {
+  static async run(input) {
     //At initialization, fetches now playing movies *else statement* and displays them in the homepage, also gets movies by filter or genres from the navbar to display in the homepage
     let movies
-    if (typeof genreId === "number") { movies = await APIService.fetchMoviesByGenre(genreId) }
-    else { movies = await APIService.fetchMovies(genreId) }
+    if (typeof input === "number") { movies = await APIService.fetchMoviesByGenre(input) }
+    else { movies = await APIService.fetchMovies(input) }
     HomePage.renderMovies(movies);
   };
 };
@@ -95,6 +95,12 @@ class APIService {
     //results is the array that has the movies as objects inside
     return movieSearchResults.results.map(movie => new Movie(movie))
   }
+
+  static async fetchCompanies (companyId) {
+    const url = APIService._constructUrl(`/company/${companyId}`);
+    const data = await (await fetch(url)).json();
+    return new Company(data);
+  }
 };
 
 class HomePage {
@@ -154,7 +160,6 @@ class Movies {
 };
 
 //Classes for pages start here
-
 class MoviePage {
   static renderMovieSection(movie, castCrew, relatedMovies, trailer) {
     MovieSection.renderMovie(movie);
@@ -174,7 +179,11 @@ class MovieSection {
     const languages = movie.spokenLanguages.map(language => language.name).join(", ")
 
     //Loop through production companies and create a html string to display
-    const production = movie.productionCompanies.map(company => `<div class="company-card col-md-4"><h6>${company.name}</h6><img style="width: 100%;" src=${movie.productionLogoUrl(movie.productionCompanies.indexOf(company))} alt="${company.name}" height="150px" width="300px"></div>`).join(" ")
+    const production = movie.productionCompanies.map(company => `
+    <div class="company-card col-md-4 col-s-6 col-6">
+      <h6>${company.name}</h6>
+      <img style="width: 100%" src=${movie.productionLogoUrl(movie.productionCompanies.indexOf(company))} alt="${company.name}" height="150px" width="300px" href='Company.getCompanyById(${company.id})' target="blank"> 
+    </div>`).join(" ")
 
     // <img id="movie-poster" src="${movie.posterUrl}" class="img-fluid ">
     // class="d-flex justify-content-center align-items-center x-0" style="width: 100%; height: 100%;" used flex things
@@ -202,13 +211,13 @@ class MovieSection {
         </div>
       </div>
 
-      <div id="castCrew-wrapper" class="row my-2">       
+      <div id="castCrew-wrapper" class="row my-2" style="width: 95%;">       
       </div>
       
       <div class="trailerDiv row align-items-center container-fluid " >
       </div>
 
-      <div class="column my-4" style="text-align: center;">
+      <div class="column my-4" style="text-align: center; width: 95%;">
         <h3>Movies you might like:</h3>
         <div id ="related-movies" class="row justify-content-center gx-4 my-3">
         </div>
@@ -224,10 +233,13 @@ class MovieSection {
     const castCrewDiv = document.querySelector('#castCrew-wrapper')
     castCrew.director.name = castCrew.director.name + ", Director"
     castCrew.actors.unshift(castCrew.director)
-    console.log(castCrew.actors)
 
     //Loop through director and actors and create a html string including their names and photos, onclick image, call renderActorPage with the actor's id 
-    const directorAndActors = castCrew.actors.map(actor => `<div class="actor col-md-2 col-sm-4"><img style="cursor: pointer;" src=${castCrew.actorsProfileUrl(castCrew.actors.indexOf(actor))} class="img-fluid" onclick="ActorPage.run(${actor.id})" ><h6>${actor.name}</h6></div>`).join(" ")
+    const directorAndActors = castCrew.actors.map(actor => `
+    <div class="actor col-md-2 col-sm-4 col-6">
+      <img style="cursor: pointer;" src=${castCrew.actorsProfileUrl(castCrew.actors.indexOf(actor))} class="img-fluid" onclick="ActorPage.run(${actor.id})" >
+      <h6>${actor.name}</h6>
+    </div>`).join(" ")
 
     castCrewDiv.innerHTML = `     
         <h3>Director and Actors:</h3>
@@ -240,7 +252,11 @@ class MovieSection {
     const relatedMoviesDiv = document.querySelector('#related-movies')
 
     //Loop through related movies and create a html string to display
-    const recommendations = relatedMovies.movies.map(movie => `<div class="related-movie col-md-2 col-sm-4"><img src=${relatedMovies.relatedMoviesPosterUrl(relatedMovies.movies.indexOf(movie))} class="img-fluid" role="button" onclick="Movies.runFromID(${movie.id})"><h6>${movie.title}</h6></div>`).join(" ")
+    const recommendations = relatedMovies.movies.map(movie => `
+    <div class="related-movie col-md-2 col-sm-4 col-6">
+      <img src=${relatedMovies.relatedMoviesPosterUrl(relatedMovies.movies.indexOf(movie))} class="img-fluid" role="button" onclick="Movies.runFromID(${movie.id})">
+      <h6>${movie.title}</h6>
+    </div>`).join(" ")
     relatedMoviesDiv.innerHTML = recommendations
   }
 
@@ -317,17 +333,25 @@ class ActorPage {
     const gender = actorData => actorData.gender == 1 ? "Female" : "Male";
 
     //Loop through movies played in and create a html string to display 
-    const moviesCast = movieCredits.moviesInCast.map(movie => `<div class="movie-card col-md-2 col-sm-4 "><img class="img-fluid" src=${movieCredits.castMoviesPosterUrl(movieCredits.moviesInCast.indexOf(movie))} alt="${movie.title}" onclick="Movies.runFromID(${movie.id})"><h6>${movie.title} as ${movie.character}</h6></div>`).join(" ")
+    const moviesCast = movieCredits.moviesInCast.map(movie => `
+    <div class="movie-card col-md-2 col-sm-4 col-6">
+      <img class="img-fluid" src=${movieCredits.castMoviesPosterUrl(movieCredits.moviesInCast.indexOf(movie))} alt="${movie.title}" onclick="Movies.runFromID(${movie.id})">
+      <h6>${movie.title} as ${movie.character}</h6>
+    </div>`).join(" ")
 
     //Loop through movies worked in and create a html string to display
-    const moviesCrew = movieCredits.moviesInCrew.map(movie => `<div class="movie-card col-md-2 col-sm-4"><img class="img-fluid" src=${movieCredits.crewMoviesPosterUrl(movieCredits.moviesInCrew.indexOf(movie))} alt="${movie.title}" onclick="Movies.runFromID(${movie.id})"><h6>${movie.title} as ${movie.job}</h6></div>`).join(" ")
+    const moviesCrew = movieCredits.moviesInCrew.map(movie => `
+    <div class="movie-card col-md-2 col-sm-4 col-6">
+      <img class="img-fluid" src=${movieCredits.crewMoviesPosterUrl(movieCredits.moviesInCrew.indexOf(movie))} alt="${movie.title}" onclick="Movies.runFromID(${movie.id})">
+      <h6>${movie.title} as ${movie.job}</h6>
+    </div>`).join(" ")
 
     container.innerHTML = `
-    <div class="row pt-4">
-        <div class="col-md-4">
+    <div class="row pt-4 mx-2">
+        <div class="col-md-4 col-sm-4">
           <img id="actor-profile" class="img-fluid" src=${actorData.actorsProfileUrl()}> 
         </div>
-        <div class="col-md-8 actor-content">
+        <div class="col-md-8 col-sm-8 actor-content">
         <h2 id="actor-name">${actorData.name}</h2>
         <h5 id="gender">Gender: ${gender(actorData)}</h5>
         <h5 id="popularity">Popularity: ${actorData.popularity}</h5>
@@ -356,25 +380,24 @@ class SearchPage {
     const movieSearchResults = await APIService.fetchMovieSearchResults(search)
     const personSearchResults = await APIService.fetchActorSearchResults(search)
 
+    let movies, people
+    if (movieSearchResults.length === 0) { movies = "<h4>Unfortunately, no such movies found.</h4>" }
+    
     //Loop through movie search results and create a html string to display
-    const movies = movieSearchResults.map(movie => `
-
-    <div class="searchResult-card col-md-2 col-sm-3 col-6">
-      <img src='${movie.posterUrl}' class="img-fluid" alt="${movie.title}" onclick="Movies.runFromID(${movie.id})">
-      <h4>${movie.title}</h4>
-    </div>
-
-    `).join(" ");
-
-    const people = personSearchResults.map(person => `
-
+    else {movies = movieSearchResults.map(movie => `
+      <div class="searchResult-card col-md-2 col-sm-3 col-6">
+        <img src='${movie.posterUrl}' class="img-fluid" alt="${movie.title}" onclick="Movies.runFromID(${movie.id})">
+        <h4>${movie.title}</h4>
+      </div>`).join(" ");}  
+    
+    if (personSearchResults.length === 0) { people = "<h4>Unfortunately, no such people found.</h4>"}
+    
+    //Loop through person search results and create a html string to display
+    else {people = personSearchResults.map(person => `
     <div class="searchResult-card col-md-2 col-sm-3 col-6">
       <img src='${person.actorsProfileUrl()}' class="img-fluid" alt="${person.name}" onclick="ActorPage.run(${person.id})">
       <h4>${person.name}</h4>
-
-    </div>
-
-    `).join(" ");
+    </div>`).join(" ")}
     
     container.innerHTML = `
     <h2>Movie Search Results</h2>
@@ -491,6 +514,17 @@ class Trailer {
   trailerUrl() {
     return this.trailer.key ? Trailer.TRAILER_BASE_URL + this.trailer.key : "";
   };
+}
+
+class Company {
+  constructor(json){
+    this.homepage = json.homepage
+  }
+
+  static async getCompanyById (companyId) {
+    const company = await APIService.fetchCompanies(companyId)
+    return `${company.homepage}`
+  }
 }
 
 class SingleActor {
