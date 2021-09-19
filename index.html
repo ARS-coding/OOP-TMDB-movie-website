@@ -19,22 +19,23 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       
+      <div class="container pt-0 px-3 px-sm-0 d-flex flex-row">
         <!-- Logo and toggler button -->
-        <a class="navbar-brand offset-1" href="https://www.themoviedb.org/" target="_blank"><img class="img-fluid" width="140" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="TMBD logo"></a>
-        <button class="navbar-toggler mx-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand m-0" href="https://www.themoviedb.org/" target="_blank"><img class="img-fluid" width="140" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="TMBD logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>      
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item active" >
-              <a class="nav-link h5" href="#" onclick="App.run('now_playing')">Home</a>
+            <li class="nav-item active d-flex align-items-center" >
+              <a class="nav-link h5 m-0" href="#" onclick="App.run('now_playing')">Home</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link h5" href="#" onclick="ActorListPage.run()">Actors</a>
+            <li class="nav-item active d-flex align-items-center">
+              <a class="nav-link h5 m-0" href="#" onclick="ActorListPage.run()">Actors</a>
             </li>
-            <li class="dropdown">
-              <a class="nav-link h5 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="dropdown d-flex align-items-center">
+              <a class="nav-link h5 dropdown-toggle m-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 Movie Genres
               </a>
             
@@ -62,8 +63,8 @@
 
               </ul>
             </li>
-            <li class="dropdown">
-              <a class="nav-link h5 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="dropdown d-flex align-items-center">
+              <a class="nav-link h5 dropdown-toggle m-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 Filter
               </a>
               <ul class="dropdown-menu" >
@@ -73,8 +74,8 @@
                 <li><a class="dropdown-item" href="#" onclick="App.run('upcoming')">Up Coming</a></li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link h5" href="#" onclick="AboutPage.renderAboutPage()">About</a>
+            <li class="nav-item d-flex align-items-center">
+              <a class="nav-link h5 m-0" href="#" onclick="AboutPage.renderAboutPage()">About</a>
             </li>
           </ul>
           <form class="form-inline m-3 my-lg-0 offset-lg-2 offset-xl-3 d-flex">
@@ -82,8 +83,8 @@
             <button class="btn btn-outline-success my-2 my-sm-0" id="submit" type="submit">Search</button>
           </form>
         </div>
-
-      </nav>
+      </div>
+    </nav>
 
     <div id="container" class="container-fluid"></div>
 
