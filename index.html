@@ -39,7 +39,7 @@
                 Movie Genres
               </a>
             
-              <ul class="dropdown-menu" >
+              <ul class="dropdown-menu position-absolute" >
                 <li><a class="dropdown-item" href="#" onclick="App.run(28)">Action</a></li>
                 <li><a class="dropdown-item" href="#" onclick="App.run(12)">Adventure</a></li>
                 <li><a class="dropdown-item" href="#" onclick="App.run(16)">Animation</a></li>
@@ -67,7 +67,7 @@
               <a class="nav-link h5 dropdown-toggle m-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 Filter
               </a>
-              <ul class="dropdown-menu" >
+              <ul class="dropdown-menu position-absolute" >
                 <li><a class="dropdown-item" href="#" onclick="App.run('popular')">Popular</a></li>
                 <li><a class="dropdown-item" href="#" onclick="App.run('top_rated')">Top Rated</a></li>
                 <li><a class="dropdown-item" href="#" onclick="App.run('now_playing')">Now Playing</a></li>
@@ -78,7 +78,7 @@
               <a class="nav-link h5 m-0" href="#" onclick="AboutPage.renderAboutPage()">About</a>
             </li>
           </ul>
-          <form class="form-inline m-3 my-lg-0 offset-lg-2 offset-xl-3 d-flex">
+          <form class="form-inline m-lg-3 my-lg-0 offset-lg-2 offset-xl-3 d-flex">
             <input class="form-control mr-sm-2" id="search" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" id="submit" type="submit">Search</button>
           </form>
